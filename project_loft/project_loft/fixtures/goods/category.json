@@ -1,0 +1,82 @@
+[
+    {
+        "model": "goods.category",
+        "pk": 1,
+        "fields": {
+            "title": "Кухни",
+            "parent": null,
+            "slug": "kuhnya",
+            "image": "icons/categories/kitchen-icon_CN8n5WU.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 2,
+        "fields": {
+            "title": "Спальни",
+            "parent": null,
+            "slug": "spalni",
+            "image": "icons/categories/bedroom-icon_kr3eCbX.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 3,
+        "fields": {
+            "title": "Гостинные",
+            "parent": null,
+            "slug": "gostinnye",
+            "image": "icons/categories/livingroom-icon_6MuTABV.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 4,
+        "fields": {
+            "title": "Прихожие",
+            "parent": null,
+            "slug": "prihozhie",
+            "image": "icons/categories/closet-icon_A0DIbZl.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 5,
+        "fields": {
+            "title": "Офисная мебель",
+            "parent": null,
+            "slug": "ofisnaya-mebel",
+            "image": "icons/categories/office-icon_l30Yd77.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 6,
+        "fields": {
+            "title": "Детская",
+            "parent": null,
+            "slug": "detskaya",
+            "image": "icons/categories/childrensroom-icon_vutdVQs.svg"
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 7,
+        "fields": {
+            "title": "акция",
+            "parent": null,
+            "slug": "akciya",
+            "image": ""
+        }
+    },
+    {
+        "model": "goods.category",
+        "pk": 8,
+        "fields": {
+            "title": "Кухонный стол",
+            "parent": 1,
+            "slug": "kuhonnyj-stol",
+            "image": ""
+        }
+    }
+]

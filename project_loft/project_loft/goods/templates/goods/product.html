@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+{% load loft_tags %}
+{% load fav_tags %}
+
+{% block title %}
+{{ product_main.category|lower }} {{ product_main.title }} {{ product_main.color_name_en }}
+{% endblock title %}
+
+{% block slider %}
+<div class="product__slider">
+    <div class="product__slider-content">
+
+        <div class="sliderLines">
+            
+            <div class="product__slider-item active">
+                <img src={{ product_main.images.first.image.url }} alt="banner"
+                    class="product__slider-img">
+            </div>
+
+            {% for image in product_main.images.all|slice:"1:"  %}
+            <div class="product__slider-item">
+                <img src={{ image.image.url }} alt="banner"
+                    class="product__slider-img">
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="product__slider-panel">
+
+            <ul class="product__slider-indicators">
+                <li>
+                    <a href="#!" class="indicators__links active">
+                        <img src={{ product_main.get_product_image }} alt="products" width="100px">
+                    </a>
+                </li>
+                {% for image in product_main.images.all|slice:"1:" %}
+                <li>
+                    <a href="#!" class="indicators__links">
+                        <img src={{ image.image.url }} alt="products" width="100px">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="product__slider-btns">
+                <button class="btn__next">
+                    <img src={% static "base/assets/icons/arrow-black.svg" %} alt="arrow">
+                </button>
+                <button class="btn__prev">
+                    <img src={% static "base/assets/icons/arrow-black.svg" %} alt="arrow">
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="product__slider-parameters">
+        <div class="product__raiting">
+            <div class="product__raiting-body">
+                <div class="product__raiting-active"></div>
+                <div class="product__raiting-items">
+                    <input type="radio" name="raiting" value="1" class="product__raiting-links">
+                    <input type="radio" name="raiting" value="2" class="product__raiting-links">
+                    <input type="radio" name="raiting" value="3" class="product__raiting-links">
+                    <input type="radio" name="raiting" value="4" class="product__raiting-links">
+                    <input type="radio" name="raiting" value="5" class="product__raiting-links">
+                </div>
+            </div>
+            <div class="product__raiting-value">3.4</div>
+            
+        </div>
+        <h1 class="product__title">{{ product_main.title }}</h1>
+        <span class="product__categories">{{ product_main.category }} {{ product_main.title }} {{ product_main.color_name_en }}</span>
+        <div class="product__links">
+            <h2 class="product__links-price"> <span>{% get_normal_price product_main.sell_price %} UZS</span> </h2>
+            <a href="#!" class="product__links-buy">Купить</a>
+
+            {% get_fav_products request as favs %}
+            <a href="{% url "favourites:add_fav" product_main.slug %}" class="products__item-heart product__links-add 
+            {% if product_main in favs %}
+            active
+            {% endif %}
+            ">
+                <span>Добавить в желаемое</span></a>
+        </div>
+
+        <ul class="paremeters__list">
+            <li class="paremetes__list-item">
+
+
+                <h3 class="paremeters__list-title">Цвет</h3>
+                <a href="#!" class="paremeters__list-btn">
+                    <div class="paremeters__color" style="background: {{ product_main.color_code }};"></div>
+                    <img src={% static "base/assets/icons/arrow-black.svg" %} alt="arrow-down">
+                </a>
+                <div class="list__drop">
+                    {% for product_color in colors %}
+                    <a href="{{ product_color.get_absolute_url }}">
+                        <div class="paremeters__color" style="background: {{ product_color.color_code }};"></div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </li>
+
+
+
+
+            <li class="paremetes__list-item">
+                <h3 class="paremeters__list-title">Количество</h3>
+                <a href="#!" class="paremeters__list-btn">
+                    <div class="paremeters__count"><span>1</span></div>
+                    <img src={% static "base/assets/icons/arrow-black.svg" %} alt="arrow-down">
+                </a>
+                    <div class="list__drop">
+                        {% for num in product_main_quantity %}
+                        <a href="?product_quantity={{ num }}"><div class="paremeters__color" style="background: white; text-align: center; margin:">{{ num }}</div>
+                            </a>
+                        {% endfor %}
+                    </div>
+
+            </li>
+            <li class="paremetes__list-item">
+                <h3 class="paremeters__list-title">Размер (Д × Ш × В)</h3>
+                <a href="#!" class="paremeters__list-btn">
+                    <div class="paremeters__size">{% get_normal_size product_main.size %}</div>
+                </a>
+            </li>
+        </ul>
+
+        <p class="product__descr">
+            <span class="product__descr-title">Описание</span>
+            Лаконичные линии и простые формы, безупречный стиль и индивидуальность – все это диван
+            «Динс». Сдержанный скандинавский дизайн украсит любую современную обстановку.
+            Элегантность, комфорт и функциональность, собранные воедино – «Динс» просто создан для
+            размеренного отдыха в кругу семьи или компании друзей!
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+<main class="main">
+    <div class="container">
+        <section class="products">
+            <h2 class="products__title">Хиты продаж</h2>
+            <div class="products__content">
+
+                <!-- /.products__item -->
+                 {% for product in recommended_products %}
+                {% if product_main != product %}
+                {% include 'home/components/_card.html' %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            <!-- /.products__content -->
+        </section>
+        <!-- /.products -->
+    </div>
+    <!-- /.container -->
+</main>
+{% endblock content %}

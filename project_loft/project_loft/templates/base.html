@@ -1,0 +1,200 @@
+{% load static %}
+{% load loft_tags %}
+{% load fav_tags %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Css - Стили -->
+    {% include 'components_base/_styles.html' %}
+    <title>
+        {% block title %}
+        
+        {% endblock title %}
+    </title>
+
+</head>
+
+<body>
+
+    <nav class="nav">
+        <div class="container _nav">
+            <div class="nav__content">
+                {% comment %} <h2 class="nav__title">Меню</h2>
+                <a href="#!" class="nav__bars-exit">
+                    <img src={% static "base/assets/icons/exit.svg" %} alt="exit">
+                </a>
+                </div> {% endcomment %}
+                <ul class="nav__list">
+                    <li>
+                        <a href="{% url "home:index" %}" class="nav__list-links">
+                            <img src={% static "base/assets/icons/home.svg" %} alt="home">
+                            Главная
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./about.html" class="nav__list-links">
+                            <img src={% static "base/assets/icons/aboute.svg" %} alt="aboute">
+                            О нас
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="nav__list-links">
+                            <img src={% static "base/assets/icons/contacts.svg" %} alt="contacts">
+                            Контакты
+                        </a>
+                    </li>
+
+
+                    
+                </ul>
+                <!-- /.nav__list -->
+                <ul class="nav__contacts">
+
+                    <li>
+                        <a href="./registration.html" class="nav__contacts-links">
+                           <i class="far fa-truck"></i>
+                           Доставка
+                       </a>
+                   </li>
+                    
+                    <li>
+                        <a href="tel:89648999119" class="nav__contacts-links">
+                            <i class="far fa-phone-alt"></i>
+                            8 (964) 89 99 119
+                        </a>
+                    </li>
+
+                    {% if not request.user.is_authenticated %}
+                    <a href="{% url "users:login" %}" class="nav__contacts-links">
+                        Войти
+                        </a>
+                   {% else %}
+                   <a href="{% url "users:logout" %}" class="nav__contacts-links">
+                    Выход
+                    </a>
+                   {% endif %}
+
+
+                   
+                </ul>
+
+
+                <!-- /.nav__contacts -->
+
+            </div>
+            <!-- /.nav__content -->
+        </div>
+        {% comment %} <ul class="nav__list _categories">
+            <li>
+                <h2 class="nav__title nav__title-categories">Категории</h2>
+            </li>
+            {% get_categories as categories %}
+
+            {% for category in categories %}
+            <li>
+                <a href="#!" class="nav__list-links">
+                    <img src={{ category.image.url }} alt="icons">{{ category.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul> {% endcomment %}
+
+    </nav>
+    <!-- /.nav -->
+
+    <div class="wrapper">
+
+        <header class="header">
+            <div class="container">
+                <div class="header__content">
+                    <div class="header__bar">
+                        <a href="#!" class="nav__bars-open">
+                            <span class="burger"></span>
+                            <span class="burger"></span>
+                            <span class="burger"></span>
+                        </a>
+
+                        <a href="{% url "home:index" %}" class="logo">
+                            <img src={% static 'base/assets/icons/LOGO.svg' %} alt="logo">
+                        </a>
+                        <form class="header__search">
+                            <i class="fal fa-search"></i>
+                            <input type="text" class="header__search-txt" placeholder="Поиск">
+                        </form>
+
+                        <ul class="header__list">
+                            <li>
+                                <a href="./registration.html" class="header__list-item _truck">
+                                    <i class="far fa-truck"></i>
+                                    Доставка
+                                </a>
+                            </li>
+                            <li>
+
+                               <a href="{% url "favourites:favourites" %}" class="header__list-item
+                            {% if 'favourites' in request.path %}active{% endif %}" id="_heart" >
+                                   
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'carts:cart' %}" class="header__list-item" id="_bag">
+                            
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'users:profile' %}" class="header__list-item" id="_profile">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% include 'components_base/_notifications.html' %}
+
+
+                    <ul class="header__list _categories">
+                        
+                        {% get_categories as categories %}
+                        {% for category in categories|slice:":7" %}
+                        <li>
+                            <a href={{ category.get_absolute_url }} class="header__list-links">
+                                <span class="header__list-img">
+                                    {% if category.image %}
+                                    <img src="{{ category.image.url }}" alt="icons">
+                                    {% endif %}
+                                </span>
+                                {{ category.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- /.nav__catigories -->
+                        
+                    {% block slider %}
+
+                    {% endblock %}
+                </div>
+                <!-- /.header__content -->
+            </div>
+            <!-- /.container -->
+        </header>
+        <!-- /.header -->
+        
+        {% block content %}
+
+        {% endblock content %}
+
+        <!-- /.main -->
+
+        {% include "layout/_footer.html" %}
+        <!-- /.footer -->
+    </div>
+    <!-- /.wrapper -->
+
+    {% include 'components_base/_scripts.html' %}
+    <!-- Js - скрипты -->
+</body>
+
+</html>

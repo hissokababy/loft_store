@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}
+  Авторизация
+{% endblock %}
+
+
+{% block content %}
+  <main class="main">
+
+    <div class="registeration">
+      <div class="container">
+
+        <div class="registeration__content">
+
+          <!-- Форма регистрации -->
+          <form class="registeration__form {% if 'register' in request.path %}active{% endif %}" method="post" action="{% url 'users:register' %}">
+            {% csrf_token %}
+            <h2 class="registeration__title products__title">Регистрация</h2>
+            <div class="registeration__form-grid">
+
+
+            
+
+              <!-- Поля формы -->
+              <div class="input__title">
+                <h2>Логин</h2>
+                <input type="username" class="contact__section-input" id="id_username" value="{% if register_form.username.value %}{{ register_form.username.value }}{% endif %}" name="username" required>
+                {% if register_form.username.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.username.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+
+              
+              <div class="input__title">
+                <h2>Имя</h2>
+                <input type="first_name" class="contact__section-input" id="id_first_name" value="{% if register_form.first_name.value %}{{ register_form.first_name.value }}{% endif %}" name="first_name">
+                {% if register_form.first_name.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.first_name.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>Фамилия</h2>
+                <input type="last_name" class="contact__section-input" id="id_last_name" value="{% if register_form.last_name.value %}{{ register_form.last_name.value }}{% endif %}" name="last_name">
+              
+              {% if register_form.last_name.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.last_name.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>E-mail</h2>
+                <input type="email" class="contact__section-input" id="id_email" value="{% if register_form.email.value %}{{ register_form.email.value }}{% endif %}" name="email" required>
+                {% if register_form.email.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.email.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>Номер телефона</h2>
+                <input type="phone_number" class="contact__section-input" id="id_phone_number" value="{% if register_form.phone_number.value %}{{ register_form.phone_number.value }}{% endif %}" name="phone_number">
+              
+                {% if register_form.phone_number.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.phone_number.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>Придумайте пароль</h2>
+                <input type="password" class="contact__section-input" id="id_password1" name="password1" required>
+                {% if register_form.password1.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                    <p>{{ register_form.password1.errors }}</p>
+                </div>
+              {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>Подтвердить пароль</h2>
+                <input type="password" class="contact__section-input" id="id_password2" name="password2" required>
+                {% if register_form.password2.errors %}
+                <div class="error-message" style="color: #ff0000; font-size: 12px; padding-top: 5px;">
+                  {% for error in  register_form.password2.errors  %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+
+                </div>
+              {% endif %}
+              </div>
+
+            </div>
+            
+            <div class="registeration__btns">
+
+              <button class="btn registeration__btn" type="submit">Подтвердить</button>
+              <a href="{% url "users:login" %}" class="registeration__links">Уже есть аккаунт? </a>
+            </div>
+
+          <button class="btn registeration__btn-login _revers" type="submit">Войти</button>
+
+
+          </form>
+
+          <!-- Форма авторизации -->
+          <form class="registeration__form {% if 'login' in request.path %}active{% endif %}" method="post" action="{% url 'users:login' %}">
+            {% csrf_token %}
+            <h2 class="registeration__title products__title">Авторизация</h2>
+            <div class="registeration__form-grid">
+              
+            
+              <div class="input__title">
+                <h2>Логин</h2>
+                <input type="username" class="contact__section-input" id="id_username" name="username" value="{% if login_form.username.value %}{{ login_form.username.value }}{% endif %}" required>
+                {% if login_form.username.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">{{ login_form.username.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div class="input__title">
+                <h2>Пароль</h2>
+                <input type="password" class="contact__section-input" id="id_password" name="password" required>
+                {% if login_form.password.errors %}
+                  <div class="alert alert-danger alert-dismissible fade show">{{ login_form.password.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <button class="btn registeration__btn-login _auth" type="submit">Войти</button>
+
+            <div class="registeration__btns">
+              <a href="{% url 'users:register' %}" class="registeration__links" id="toggle-register">Регистрация</a>
+            </div>
+            
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+
+
+
+<style>
+  .alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+</style>
