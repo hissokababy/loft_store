@@ -26,6 +26,7 @@ urlpatterns = [
     path('favourites/', include('favourites.urls', namespace='favourites')),
     path('users/', include('users.urls', namespace='users')),
     path('carts/', include('carts.urls', namespace='carts')),
+    path('orders/', include('orders.urls', namespace='orders')),
     
 ]
 

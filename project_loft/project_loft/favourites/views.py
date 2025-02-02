@@ -15,24 +15,18 @@ def favourite(request):
 def add_fav_product(request, product_slug):
     product = Product.objects.get(slug=product_slug)
     
-    if request.user.is_authenticated:
+    if not request.user.is_authenticated:
+        fav_product, created = Favourite.objects.get_or_create(session_key=request.session.session_key, product=product)
+    else:
         fav_product, created = Favourite.objects.get_or_create(user=request.user, product=product)
         
-        if not created:
-            messages.error(request, 'Товар удален из избранных')
-            fav_product.delete()
-        else:
-            messages.success(request, 'Товар добавлен в избранное')
-            
-    else:
-    
-        fav_product, created = Favourite.objects.get_or_create(session_key=request.session.session_key, product=product)
         
-        if not created:
-            messages.error(request, 'Товар удален из избранных')
-            fav_product.delete()
-        else:
-            messages.success(request, 'Товар добавлен в избранное')
+    if not created:
+        messages.error(request, 'Товар удален из избранных')
+        fav_product.delete()
+    else:
+        messages.success(request, 'Товар добавлен в избранное')
+        
         
         
     referer = request.META.get('HTTP_REFERER', '/')    

@@ -32,14 +32,7 @@ def product(request, product_slug):
         'recommended_products': Product.objects.filter(category=product.category),
         'colors': Product.objects.filter(title=product.title),
         'product_main_quantity': [i for i in range(product.quantity)]
-    }
-    musor = ['Длина', 'Ширина', 'Высота']
-    lst = ' '.join([i for i in product.size.split(' ') if i not in musor])
-    
-    x = ''.join(lst.split())
-    
-    print(''.join(x.split('х')).replace('см', ' СМ '))
-    
+    }    
     
     
     return render(request, 'goods/product.html', context)

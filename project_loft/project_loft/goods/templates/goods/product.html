@@ -76,7 +76,16 @@
         <span class="product__categories">{{ product_main.category }} {{ product_main.title }} {{ product_main.color_name_en }}</span>
         <div class="product__links">
             <h2 class="product__links-price"> <span>{% get_normal_price product_main.sell_price %} UZS</span> </h2>
-            <a href="#!" class="product__links-buy">Купить</a>
+
+            {% get_user_cart_products request as user_cart_products %}
+            {% if product_main in user_cart_products %}
+            <a href="{% url 'carts:cart' %}" 
+            class="product__links-buy">Перейти в корзину</a>
+            {% else %}
+            <a href="{% url 'carts:cart_add' product_main.slug %}?quantity={{ request.GET.quantity }}" 
+            class="product__links-buy">В корзину</a>
+            {% endif %}
+
 
             {% get_fav_products request as favs %}
             <a href="{% url "favourites:add_fav" product_main.slug %}" class="products__item-heart product__links-add 
@@ -111,12 +120,12 @@
             <li class="paremetes__list-item">
                 <h3 class="paremeters__list-title">Количество</h3>
                 <a href="#!" class="paremeters__list-btn">
-                    <div class="paremeters__count"><span>1</span></div>
+                    <div class="paremeters__count"><span>{% if 'quantity' in request.GET %}{{ request.GET.quantity }}{% else %}1{% endif %}</span></div>
                     <img src={% static "base/assets/icons/arrow-black.svg" %} alt="arrow-down">
                 </a>
                     <div class="list__drop">
                         {% for num in product_main_quantity %}
-                        <a href="?product_quantity={{ num }}"><div class="paremeters__color" style="background: white; text-align: center; margin:">{{ num }}</div>
+                        <a href="?quantity={{ num }}"><div class="paremeters__color" style="background: white; text-align: center; margin:">{{ num }}</div>
                             </a>
                         {% endfor %}
                     </div>

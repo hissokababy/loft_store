@@ -7,8 +7,8 @@ from goods.models import Product
 
 
 class Favourite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Пользователь')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favourites')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Пользователь', related_name='favourites')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     session_key = models.CharField(max_length=255, blank=True, null=True)
     
     def __str__(self):

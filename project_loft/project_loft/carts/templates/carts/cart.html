@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load loft_tags %}
 {% block title %}
 Корзина
 {% endblock title %}
@@ -9,157 +10,79 @@
 {% block content %}
 <main class="main">
     <div class="container">
+
+        
         <section class="basket">
             <div class="basket__text">
+                {% if cart_products.total_quantity %}
                 <h1 class="basket__title">Ваша корзина</h1>
-                <span class="basket__count"><span>4</span> предмета</span>
+                <span class="basket__count"><span>{{ cart_products.total_quantity }}</span> предмета</span>
+                {% endif %}
             </div>
+
+            {% if not cart_products %}
+            <div class="favorites">
+                <div class="favorites__txt" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px;">
+                    <h2 class="favorites__title" style="font-size: 24px; margin: 0;">Ваша корзина пуста</h2>
+                    <span></span>
+                    <hr>
+                    <hr>
+                </div>
+            {% endif %}
+            
+
             <div class="basket__items">
+                {% for cart_product in cart_products %}
+                
                 <div class="basket__item">
-                    <a href="#!" class="basket__item-img">
-                        <img src={% static "base/assets/images/main/products/19.png" %} alt="product">
+                    <a href="{{ cart_product.product.get_absolute_url }}" class="basket__item-img">
+                        <img src={{ cart_product.product.get_product_image }} alt="product">
                     </a>
                     <div class="basket__item-content">
                         <div class="basket__item-text">
-                            <h2 class="basket__item-title">Кускен Navy Blue</h2>
+                            <h2 class="basket__item-title">{{ cart_product.product.title }} {{ cart_product.product.color_name_en }}</h2>
                             <p class="basket__item-price">
                                 <span class="discount">
+                                    {% if cart_product.product.discount %}
                                     <i class="far fa-badge-percent"></i>
-                                    -25%
+                                    -{{ cart_product.product.discount }}%
+                                    {% endif %}
                                 </span>
-                                <span class="old__price"><span>37 990</span>₽</span>
-                                <span class="price"><span>16 990</span>₽</span>
-
+                                {% if cart_product.product.discount %}
+                                <span class="old__price"><span>{% get_normal_price cart_product.product.price %}</span> UZS</span>
+                                <span class="price"><span>{% get_normal_price cart_product.products_price %}</span> UZS</span>
+                                {% else %}
+                                <span class="price"><span>{% get_normal_price cart_product.products_price %}</span> UZS</span>
+                                {% endif %}
                             </p>
                         </div>
                         <div class="basket__options">
                             <p class="basket__options-color">
                                 Цвет:
-                                <span class="color__name">Темно-синий</span>
-                                <span class="color__block"></span>
+                                <span class="color__name">{{ cart_product.product.color_name_ru }}</span>
+                                <span class="color__block" style="background: {{ cart_product.product.color_code }};"></span>
                             </p>
                             <p class="basket__options-count">
-                                Количество: <span>1</span>
+                                Количество: <span>{{ cart_product.quantity }}</span>
                             </p>
                             <p class="basket__options-size">
-                                Размер(Ш×Д×В): <span>218 СМ × 95 СМ × 90 СМ</span>
+                                Размер(Ш×Д×В): <span>{% get_normal_size cart_product.product.size %}</span>
                             </p>
                         </div>
                     </div>
-                    <a href="#!" class="basket__delete">
+                    <a href="{% url "carts:cart_delete" cart_product.product.slug %}" class="basket__delete">
                         <i class="fas fa-times"></i>
                     </a>
                 </div>
-                <div class="basket__item">
-                    <a href="#!" class="basket__item-img">
-                        <img src={% static "base/assets/images/main/products/1.png" %} alt="product">
-                    </a>
-                    <div class="basket__item-content">
-                        <div class="basket__item-text">
-                            <h2 class="basket__item-title">Кускен Navy Blue</h2>
-                            <p class="basket__item-price">
-                                <span class="discount">
-                                    <i class="far fa-badge-percent"></i>
-                                    -25%
-                                </span>
-                                <span class="old__price"><span>37 990</span>₽</span>
-                                <span class="price"><span>16 990</span>₽</span>
-
-                            </p>
-                        </div>
-                        <div class="basket__options">
-                            <p class="basket__options-color">
-                                Цвет:
-                                <span class="color__name">Темно-синий</span>
-                                <span class="color__block"></span>
-                            </p>
-                            <p class="basket__options-count">
-                                Количество: <span>1</span>
-                            </p>
-                            <p class="basket__options-size">
-                                Размер(Ш×Д×В): <span>218 СМ × 95 СМ × 90 СМ</span>
-                            </p>
-                        </div>
-                    </div>
-                    <a href="#!" class="basket__delete">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-                <div class="basket__item">
-                    <a href="#!" class="basket__item-img">
-                        <img src={% static "base/assets/images/main/products/12.png" %} alt="product">
-                    </a>
-                    <div class="basket__item-content">
-                        <div class="basket__item-text">
-                            <h2 class="basket__item-title">Кускен Navy Blue</h2>
-                            <p class="basket__item-price">
-                                <span class="discount">
-                                    <i class="far fa-badge-percent"></i>
-                                    -25%
-                                </span>
-                                <span class="old__price"><span>37 990</span>₽</span>
-                                <span class="price"><span>16 990</span>₽</span>
-
-                            </p>
-                        </div>
-                        <div class="basket__options">
-                            <p class="basket__options-color">
-                                Цвет:
-                                <span class="color__name">Темно-синий</span>
-                                <span class="color__block"></span>
-                            </p>
-                            <p class="basket__options-count">
-                                Количество: <span>1</span>
-                            </p>
-                            <p class="basket__options-size">
-                                Размер(Ш×Д×В): <span>218 СМ × 95 СМ × 90 СМ</span>
-                            </p>
-                        </div>
-                    </div>
-                    <a href="#!" class="basket__delete">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-                <div class="basket__item">
-                    <a href="#!" class="basket__item-img">
-                        <img src={% static "base/assets/images/main/products/9.png" %} alt="product">
-                    </a>
-                    <div class="basket__item-content">
-                        <div class="basket__item-text">
-                            <h2 class="basket__item-title">Кускен Navy Blue</h2>
-                            <p class="basket__item-price">
-                                <span class="discount">
-                                    <i class="far fa-badge-percent"></i>
-                                    -25%
-                                </span>
-                                <span class="old__price"><span>37 990</span>₽</span>
-                                <span class="price"><span>16 990</span>₽</span>
-
-                            </p>
-                        </div>
-                        <div class="basket__options">
-                            <p class="basket__options-color">
-                                Цвет:
-                                <span class="color__name">Темно-синий</span>
-                                <span class="color__block"></span>
-                            </p>
-                            <p class="basket__options-count">
-                                Количество: <span>1</span>
-                            </p>
-                            <p class="basket__options-size">
-                                Размер(Ш×Д×В): <span>218 СМ × 95 СМ × 90 СМ</span>
-                            </p>
-                        </div>
-                    </div>
-                    <a href="#!" class="basket__delete">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
+                {% endfor %}
             </div>
+
+            {% if cart_products %}
             <form class="products__form">
-                <span>Итоговая стоимость:<span class="products__form-price">69 960₽</span> </span>
-                <button class="btn products__form-btn">Оформить заказ</button>
-            </form>
+                <span>Итоговая стоимость:<span class="products__form-price">{% get_normal_price cart_products.total_price %} UZS</span> </span>
+                <a href="{% url 'orders:checkout' %}" 
+                class="product__links-buy">Оформить заказ</a></form>
+            {% endif %}
         </section>
         <!-- /.basket -->
 

@@ -75,54 +75,23 @@
                             <td>Дата</td>
                             <td>Статус</td>
                         </tr>
+
+                        {% for orders in user_order_products %}
+                        {% for order_item in orders %}
                         <tr >
                             <td colspan="4" class="profile__title-adaptive">
                                 <div class="tabel__item">
-                                    <img src={% static "base/assets/images/main/products/1.png" %} alt="img">
-                                    <span>Кускен Navy
-                                        Blue</span>
+                                    <img src={{ order_item.product.get_product_image }} alt="img">
+                                    <span>{{ order_item.product_title }} {{ order_item.product_color_name_en }}
+                                        </span>
                                 </div>
                             </td>
                             <td class="profile__tabel-data">16990</td>
                             <td class="profile__tabel-data">01.05.2020</td>
                             <td class="profile__tabel-data">Ожидается</td>
                         </tr>
-                        <tr >
-                            <td colspan="4" class="profile__title-adaptive">
-                                <div class="tabel__item">
-                                    <img src={% static "base/assets/images/main/products/2.png" %} alt="img">
-                                    <span>Кускен Navy
-                                        Blue</span>
-                                </div>
-                            </td>
-                            <td class="profile__tabel-data">28490</td>
-                            <td class="profile__tabel-data">01.05.2020</td>
-                            <td class="profile__tabel-data">Оплачено 50%</td>
-                        </tr>
-                        <tr >
-                            <td colspan="4" class="profile__title-adaptive">
-                                <div class="tabel__item">
-                                    <img src={% static "base/assets/images/main/products/3.png" %} alt="img">
-                                    <span>Кускен Navy
-                                        Blue</span>
-                                </div>
-                            </td>
-                            <td class="profile__tabel-data">21990</td>
-                            <td class="profile__tabel-data">01.05.2020</td>
-                            <td class="profile__tabel-data">Доставлено</td>
-                        </tr>
-                        <tr >
-                            <td colspan="4" class="profile__title-adaptive">
-                                <div class="tabel__item">
-                                    <img src={% static "base/assets/images/main/products/4.png" %} alt="img">
-                                    <span>Кускен Navy
-                                        Blue</span>
-                                </div>
-                            </td>
-                            <td class="profile__tabel-data">21990</td>
-                            <td class="profile__tabel-data">01.05.2020</td>
-                            <td class="profile__tabel-data">Отменен</td>
-                        </tr>
+                        {% endfor %}
+                        {% endfor %}
 
                         <!-- Не трогать - это заглушка для корректного отображения таблицы -->
                         <tr>

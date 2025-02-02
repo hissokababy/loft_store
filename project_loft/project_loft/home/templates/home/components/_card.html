@@ -5,11 +5,6 @@
 {% get_card_size product.size as product_size %}
 
 
-{% if product.discount %}
-<img src="{% static "base/assets/icons/nav_menu/Vector.svg" %}" alt="Discount"
-style="position: absolute; top: 10px; right: 176px; width: 20px; height: auto; z-index: 2;">
-<span style="position: absolute; top: 10px; right: 220px; width: 20px; height: auto; z-index: 2;">-spat{{ product.discount }}</span>
-{% endif %}
 
 <div class="products__item ">
 
@@ -56,7 +51,12 @@ style="position: absolute; top: 10px; right: 176px; width: 20px; height: auto; z
                 <span class="size">{{ product_size.2 }} СМ</span>
             </li>
         </ul>
-        <a href="./product.html" class="options__btn btn">Добавить в корзину</a>
+        {% get_user_cart_products request as cart_products %}
+        {% if product in cart_products %}
+        <a href="{% url "carts:cart" %}" class="options__btn btn">Перейти в корзину</a>
+        {% else %}
+        <a href="{% url "carts:cart_add" product.slug %}" class="options__btn btn">Добавить в корзину</a>
+        {% endif %}
     </div>
     <!-- /.products__options -->
 </div>

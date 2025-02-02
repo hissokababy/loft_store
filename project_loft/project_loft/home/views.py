@@ -6,7 +6,7 @@ from goods.models import Product
 
 
 def index(request):
-    
+
     context = {
         'products' : Product.objects.all(),
     }

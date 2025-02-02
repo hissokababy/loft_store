@@ -2621,14 +2621,14 @@ button.btns__loadfile:hover {
 .message.info {
     background-color: #2196F3;
     color: white;
-    border-left: 5px solid #1976D2;
+    border-left: 5px solid #2196F3;
 }
 
 /* Стиль для предупреждений */
 .message.warning {
     background-color: #FF9800;
     color: white;
-    border-left: 5px solid #F57C00;
+    border-left: 5px solid #FF9800;
 }
 
 /* Класс для скрытия сообщения */

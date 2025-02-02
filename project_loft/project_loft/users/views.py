@@ -6,10 +6,10 @@ from users.forms import LoginForm, ProfileForm, RegisterForm
 # Create your views here.
 
 def login_view(request):
+    
     if not request.user.is_authenticated:
         if request.method == 'POST':
                 form = LoginForm(data=request.POST)
-                print(form.errors, '/' * 100)
                 if form.is_valid():
                     username = request.POST['username']
                     password = request.POST['password']
@@ -85,7 +85,13 @@ def profile(request):
     else:
         form = ProfileForm()
         
+    user_orders = request.user.orders.all()
+        
+    order_products = [i.order_products.all() for i in user_orders]
     context = {
-        'form': form
+        'form': form,
+        # 'user_order_products': order_products,
+        # 'user_orders': user_orders
     }
+    
     return render(request, 'users/profile.html', context)

@@ -1,9 +1,14 @@
 from django.contrib import admin
 
+from orders.models import Order
 from users.models import User
 
 # Register your models here.
 
+class UserCartProductsTabular(admin.TabularInline):
+    model = Order
+    extra = 0
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name', 'last_name', 'phone_number']
+    inlines = [UserCartProductsTabular, ]
