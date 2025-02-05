@@ -81,17 +81,13 @@ def profile(request):
             
         else:
             form = ProfileForm(instance=request.user)
-        
+
     else:
         form = ProfileForm()
         
-    user_orders = request.user.orders.all()
         
-    order_products = [i.order_products.all() for i in user_orders]
     context = {
         'form': form,
-        # 'user_order_products': order_products,
-        # 'user_orders': user_orders
     }
     
     return render(request, 'users/profile.html', context)

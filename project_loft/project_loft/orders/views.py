@@ -71,8 +71,20 @@ def checkout(request):
                 return redirect('orders:order')
         
     context = {
-        'user_cart_products': request.user.carts.all(),
+        'user_carts': request.user.carts.all(),
         'form': form
     }
     return render(request, 'orders/checkout.html', context)
 
+
+
+def order_products_view(request):
+    if request.user.is_authenticated:
+        user_orders = request.user.orders.all()
+        context = {
+            'user_orders': user_orders,
+        }
+            
+        return render(request, 'orders/order_products.html', context)
+    else:
+        return redirect(request.META.get('HTTP_REFERER', '/'))

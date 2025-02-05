@@ -34,7 +34,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
-        ordering = ("id",)
+        ordering = ("-id",)
 
 
 
@@ -56,11 +56,15 @@ class OrderItem(models.Model):
     class Meta:
         verbose_name = 'Заказанный товар'
         verbose_name_plural = 'Заказанные товары'
+        ordering = ('-id', )
         
     @property
     def product_sell_price(self):
-        return round(self.product.price - self.product.price*self.product.discount/100) * self.product_quantity
-    
+        if self.product.discount:
+            return round(self.product.price - self.product.price*self.product.discount/100) * self.product_quantity
+        else:
+            return round(self.product.price * self.product_quantity)
+            
 
 
 

@@ -23,8 +23,19 @@
     <a href="{{ product.get_absolute_url }}"> <img src={{ product.get_product_image }} alt=""
             class="products__item-img"></a>
     <div class="products__item-text">
-        <h3 class="products__item-title">{{ product.title }} {{ product.color_name_en }}</h3>
-        <div class="products__item-desrc">{{ product.category }}</div>
+        <h3 class="products__item-title">
+            {% autoescape off %}
+            {% if product.headline %}{{ product.headline }} {{ product.color_name_en }}
+            {% else %}
+            {{ product.title }} {{ product.color_name_en }}{% endif %}</h3>
+            {% endautoescape %}
+        <div class="products__item-desrc">
+            {% autoescape off %}
+            {% if product.bodyline %}{{ product.bodyline }} {{ product.color_name_en }}
+            {% else %}
+            {{ product.category }}{% endif %}
+            {% endautoescape %}
+        </div>
         <div class="products__item-price">{% get_normal_price product.sell_price %} UZS</div>
     </div>
     <!-- /.products__item-text -->

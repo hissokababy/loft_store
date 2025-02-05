@@ -78,7 +78,7 @@
             <h2 class="product__links-price"> <span>{% get_normal_price product_main.sell_price %} UZS</span> </h2>
 
             {% get_user_cart_products request as user_cart_products %}
-            {% if product_main in user_cart_products %}
+            {% if product_main in user_cart_products and not request.GET.quantity %}
             <a href="{% url 'carts:cart' %}" 
             class="product__links-buy">Перейти в корзину</a>
             {% else %}
@@ -125,8 +125,10 @@
                 </a>
                     <div class="list__drop">
                         {% for num in product_main_quantity %}
+                        {% if not num == 0 %}
                         <a href="?quantity={{ num }}"><div class="paremeters__color" style="background: white; text-align: center; margin:">{{ num }}</div>
                             </a>
+                        {% endif %}
                         {% endfor %}
                     </div>
 

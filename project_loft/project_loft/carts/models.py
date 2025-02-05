@@ -33,6 +33,9 @@ class Cart(models.Model):
     def products_price(self):
         return round(self.product.price - self.product.price*self.product.discount/100) * self.quantity
 
+    def products_price_old(self):
+        return round(self.product.price * self.quantity)
+
 
     class Meta:
         verbose_name = 'Корзина'

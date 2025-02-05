@@ -1,6 +1,7 @@
 from django import template
 from django.utils.http import urlencode
-from goods.models import Category, Product
+from goods.models import Category
+from carts.models import Cart
 
 register = template.Library()
 
@@ -31,15 +32,19 @@ def get_card_size(product_size):
 
 @register.simple_tag(takes_context=True)
 def query_transform(context, **kwargs):
-    query = context['request'].GET.dict()
-    query.update(kwargs)
-    return urlencode(query)
+    query = context['request'].GET.copy()
+    for key, value in kwargs.items():
+        query[key] = value
+    return query.urlencode()
 
 
 
 @register.simple_tag()
 def get_user_cart_products(request):
-    carts =  request.user.carts.all()
-    return [i.product for i in carts]
-
+    if request.user.is_authenticated:
+        carts =  request.user.carts.all()
+        return [i.product for i in carts]
+    else:
+        carts = Cart.objects.filter(session_key=request.session.session_key)
+        return [i.product for i in carts]
 

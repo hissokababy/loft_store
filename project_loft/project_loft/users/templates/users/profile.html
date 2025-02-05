@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load loft_tags %}
+
 {% block title %}
   Мой профиль
 {% endblock %}
@@ -63,12 +65,13 @@
 
                 </form>
 
-
-
+                {% if request.user.orders.all %}
                 <div class="profile__orders">
                     <h2 class="profile__title">Мои заказы</h2>
-
+                    
+                    {% for order in request.user.orders.all|slice:":2" %}
                     <table class="profile__table">
+                        <span style="font-size: 15px; margin-top: 6px;">Заказ: № {{ order.id }} | Общ сумма: {% get_normal_price order.order_products.total_price %} UZS</span>
                         <tr>
                             <td colspan="4">Товар</td>
                             <td>Цена</td>
@@ -76,8 +79,8 @@
                             <td>Статус</td>
                         </tr>
 
-                        {% for orders in user_order_products %}
-                        {% for order_item in orders %}
+                        {% for order_item in order.order_products.all %}
+                        
                         <tr >
                             <td colspan="4" class="profile__title-adaptive">
                                 <div class="tabel__item">
@@ -86,11 +89,10 @@
                                         </span>
                                 </div>
                             </td>
-                            <td class="profile__tabel-data">16990</td>
-                            <td class="profile__tabel-data">01.05.2020</td>
-                            <td class="profile__tabel-data">Ожидается</td>
+                            <td class="profile__tabel-data">{% get_normal_price order_item.product_sell_price %} UZS</td>
+                            <td class="profile__tabel-data">{{ order.created_timestamp }}</td>
+                            <td class="profile__tabel-data">{{ order.status }}</td>
                         </tr>
-                        {% endfor %}
                         {% endfor %}
 
                         <!-- Не трогать - это заглушка для корректного отображения таблицы -->
@@ -105,8 +107,13 @@
                         </tr>
                         <!-- Не трогать - это заглушка для корректного отображения таблицы -->
                     </table>
-                    <a href="#!" class="profile__orders-link">Смотреть всё</a>
+                    {% endfor %}
+                    
+                    <a href="{% url "orders:order_products" %}" class="profile__orders-link">Смотреть всё</a>
                 </div>
+                {% else %}
+                <span>У вас нет заказов</span>
+                {% endif %}
             </div>
         </div>
     </div>

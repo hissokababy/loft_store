@@ -65,9 +65,13 @@
         </div>
 
         <div style="margin-top: 30px; border-top: 2px solid #f2f2f2; padding-top: 20px;">
-            <h2 style="font-size: 20px; color: #333; margin-bottom: 20px;">Товары в корзине</h2>
+            <h2 style="font-size: 20px; color: #333; margin-bottom: 20px;">Ваш заказ</h2>
+            Товары ({{ user_carts.count }}):
+            <br>
+            <br>
+            
             <ul style="list-style: none; padding: 0; margin: 0;">
-                {% for cart_product in user_cart_products %}
+                {% for cart_product in user_carts %}
                 <li style="font-size: 16px; color: #333; margin-bottom: 10px;">({{ cart_product.quantity }}шт) <a href="{{ cart_product.product.get_absolute_url     }}">{{ cart_product.product.title }} {{ cart_product.product.color_name_en }}</a> - <span style="font-weight: bold; color: red;">
                     
                 
@@ -76,9 +80,9 @@
 
                 {% endfor %}
             </ul>
-            <div style="font-size: 18px; font-weight: bold; color: #333; display: flex; justify-content: space-between; margin-top: 20px;">
+            <div style="font-size: 25px; font-weight: bold; color: #333; display: flex; justify-content: space-between; margin-top: 20px;">
                 <span>Итого:</span>
-                <span>{% get_normal_price user_cart_products.total_price %} UZS</span>
+                <span>{% get_normal_price user_carts.total_price %} UZS</span>
             </div>
         </div>
 

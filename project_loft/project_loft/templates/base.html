@@ -36,13 +36,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./about.html" class="nav__list-links">
+                        <a href="{% url "home:about" %}" class="nav__list-links">
                             <img src={% static "base/assets/icons/aboute.svg" %} alt="aboute">
                             О нас
                         </a>
                     </li>
                     <li>
-                        <a href="#!" class="nav__list-links">
+                        <a href="{% url "home:contact" %}" class="nav__list-links">
                             <img src={% static "base/assets/icons/contacts.svg" %} alt="contacts">
                             Контакты
                         </a>
@@ -121,9 +121,9 @@
                         <a href="{% url "home:index" %}" class="logo">
                             <img src={% static 'base/assets/icons/LOGO.svg' %} alt="logo">
                         </a>
-                        <form class="header__search">
+                        <form class="header__search" action="{% url 'goods:search' %}" method="get">
                             <i class="fal fa-search"></i>
-                            <input type="text" class="header__search-txt" placeholder="Поиск">
+                            <input type="search" class="header__search-txt" placeholder="Поиск" name="q">
                         </form>
 
                         <ul class="header__list">

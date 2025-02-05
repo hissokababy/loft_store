@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% load loft_tags %}
+{% block title %}
+Заказанные товары
+{% endblock title %}
+
+
+
+{% block content %}
+<main class="main">
+    <div class="container">
+
+        
+        <section class="basket">
+            <div class="basket__text">
+                {% if user_orders %}
+                <h1 class="basket__title">Мои заказы</h1>
+                <span class="basket__count"><span>{{ user_orders.count }}</span>{% if user_orders.count > 1 %} заказов{% endif %}</span>
+            </div>
+            {% endif %}
+            {% if not user_orders %}
+            <div class="favorites">
+                <div class="favorites__txt" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px;">
+                    <h2 class="favorites__title" style="font-size: 24px; margin: 0;">У вас нет заказов</h2>
+                    <span></span>
+                    <hr>
+                    <hr>
+                </div>
+            {% endif %}
+            
+            
+            {% for order in user_orders %}
+            
+            <span style="margin-top: 55px; font-size: 20px;" class="basket__item-title">Заказ: № {{ order.id }} | Общ сумма:  {% get_normal_price order.order_products.total_price %} UZS</span>
+            {% for order_product in order.order_products.all %}
+
+            <div class="basket__items">
+                <div class="basket__item">
+                    <a href="#!" class="basket__item-img">
+                        <img src={{ order_product.product.get_product_image }} alt="product">
+                    </a>
+                    <div class="basket__item-content">
+                        <div class="basket__item-text">
+                            <h2 class="basket__item-title">{{ order_product.product_title }} {{ order_product.product_color_name_en }}</h2>
+                            <p class="basket__item-price">
+
+
+                                <span class="price" style="font-size: large;"><span>{% get_normal_price order_product.product_sell_price %}</span> UZS</span>
+
+                            </p>
+                        </div>
+                        <div class="basket__options">
+                            <p class="basket__options-color">
+                                Цвет:
+                                <span class="color__name">{{ order_product.product.color_name_ru }}</span>
+                                <span class="color__block" style="background-color: {{ order_product.product.color_code }};"></span>
+                            </p>
+                            <p class="basket__options-count">
+                                Количество: <span>{{ order_product.product_quantity }}</span>
+                            </p>
+                            <p class="basket__options-size">
+                                Размер(Ш×Д×В): <span>{% get_normal_size order_product.product.size %}</span>
+                            </p>
+                        </div>
+                    </div>
+           
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+
+
+
+
+
+
+
+
+        </section>
+        <!-- /.basket -->
+        <!-- /.products -->
+
+    </div>
+    <!-- /.container -->
+</main>
+{% endblock content %}
+
+
+
