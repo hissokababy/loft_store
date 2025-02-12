@@ -1,6 +1,6 @@
 from django import template
 from django.utils.http import urlencode
-from goods.models import Category
+from goods.models import Category, Product
 from carts.models import Cart
 
 register = template.Library()
@@ -9,6 +9,10 @@ register = template.Library()
 @register.simple_tag()
 def get_categories():
     return Category.objects.filter(parent=None)
+
+@register.simple_tag()
+def get_products():
+    return Product.objects.all()
 
 
 @register.simple_tag()

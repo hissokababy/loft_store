@@ -1,11 +1,12 @@
 from django.urls import path
 
-from favourites.views import favourite, add_fav_product
+from django.views.generic import TemplateView
+from favourites.views import AddFavProductView
 
 app_name = 'favourites'
 
 urlpatterns = [
-    path('', favourite, name='favourites'),
-    path('<slug:product_slug>/', add_fav_product, name='add_fav'),
+    path('', TemplateView.as_view(template_name='favourites/favourites.html'), name='favourites'),
+    path('<slug:product_slug>/', AddFavProductView.as_view(), name='add_fav'),
 
 ]

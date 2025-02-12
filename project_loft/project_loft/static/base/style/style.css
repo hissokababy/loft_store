@@ -821,11 +821,9 @@
     transform: rotate(90deg);
 }
 
-.paremeters__color,
 .paremeters__count {
     width: 30px;
     height: 30px;
-    background: #FFC107;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
 }
 
